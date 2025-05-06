@@ -1,0 +1,90 @@
+/*This css file is used to format the menu page*/
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #fff;
+    color: #222;
+  }
+  
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #1badaf;
+    padding-bottom: 10px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin-top: 40px;
+    color: #1badaf;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+  }
+  
+  h3 {
+    font-size: 1.4rem;
+    margin-top: 30px;
+    color: #444;
+    border-left: 4px solid #1badaf;
+    padding-left: 10px;
+  }
+  
+  .dish {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+
+  .dish img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .dish img:hover {
+    transform: scale(1.05);
+  }
+  
+  .dish-text {
+    flex-grow: 1;
+  }
+  
+  .dish-text strong {
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 5px;
+    color: #111;
+  }
+  
+  .dish-text em {
+    font-style: italic;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .dish-text p {
+    margin: 4px 0;
+    color: #333;
+  }
+  
+  @media (max-width: 768px) {
+    .dish {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .dish img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  
