@@ -55,33 +55,36 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
         </ul>
     </div>
     </nav>
-<h1>Restaurant Menu</h1>
+    <div class="content">
+    <h1>Restaurant Menu</h1>
 
-<?php foreach ($menu as $region => $placements): ?>
-    <!-- The foreach loop is used to loop through each region in the menu array and assign it to the region variable  -->
-    <div class="region"> 
-        <h2><?= htmlspecialchars($region) ?></h2> <!-- this is used to display the region name as a header -->
-        <?php foreach ($placements as $placement => $dishes): ?>
-            <!-- the foreach loop above is used to loop through each placement in the menu array and assign it to variable placement -->
-            <div class="placement">
+    <?php foreach ($menu as $region => $placements): ?>
+        <!-- The foreach loop is used to loop through each region in the menu array and assign it to the region variable  -->
+        <div class="region"> 
+            <h2><?= htmlspecialchars($region) ?></h2> <!-- this is used to display the region name as a header -->
+            <?php foreach ($placements as $placement => $dishes): ?>
+                <!-- the foreach loop above is used to loop through each placement in the menu array and assign it to variable placement -->
+                <div class="placement">
 
-                <h3><?= htmlspecialchars($placement) ?></h3> <!-- This is used to display the placement name as a header -->
-                
-                <?php foreach ($dishes as $dish): ?> 
-                    <!-- The foreach loop is used to loop through each dish in the current placement!-->
-                    <div class="dish">
-                        <!-- This div is used to display the dish's picture, it'sname, description and price -->
-                        <img src="images/<?= htmlspecialchars($dish['image']) ?>" alt="<?= htmlspecialchars($dish['dish_name']) ?>">
-                        <div class="dish-text">
-                            <strong><?= htmlspecialchars($dish['dish_name']) ?></strong><br>
-                            <em><?= htmlspecialchars($dish['description']) ?></em><br>
-                            €<?= htmlspecialchars($dish['price']) ?>
+                    <h3><?= htmlspecialchars($placement) ?></h3> <!-- This is used to display the placement name as a header -->
+                    
+                    <?php foreach ($dishes as $dish): ?> 
+                        <!-- The foreach loop is used to loop through each dish in the current placement!-->
+                        <div class="dish">
+                            <!-- This div is used to display the dish's picture, it'sname, description and price -->
+                            <img src="images/<?= htmlspecialchars($dish['image']) ?>" alt="<?= htmlspecialchars($dish['dish_name']) ?>">
+                            <div class="dish-text">
+                                <strong><?= htmlspecialchars($dish['dish_name']) ?></strong><br>
+                                <em><?= htmlspecialchars($dish['description']) ?></em><br>
+                                €<?= htmlspecialchars($dish['price']) ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
     </div>
 <?php endforeach; ?>
+</div>
+
 </body>
 </html>
