@@ -11,14 +11,14 @@ body {
   h1 {
     font-size: 2.2rem;
     margin-bottom: 30px;
-    border-bottom: 3px solid #1badaf;
+    border-bottom: 3px solid #d94f4f;
     padding-bottom: 10px;
   }
   
   h2 {
     font-size: 1.8rem;
     margin-top: 40px;
-    color: #1badaf;
+    color: #d94f4f;
     border-bottom: 2px solid #ccc;
     padding-bottom: 5px;
   }
@@ -27,7 +27,7 @@ body {
     font-size: 1.4rem;
     margin-top: 30px;
     color: #444;
-    border-left: 4px solid #1badaf;
+    border-left: 4px solid #d94f4f;
     padding-left: 10px;
   }
   
