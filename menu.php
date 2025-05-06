@@ -91,6 +91,6 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
     </form>
 </div>
 
-<a href='Description.html'>DESCRIPTION TEMP</a>
+<a href='Description.php'>DESCRIPTION TEMP</a>
 </body>
 </html>

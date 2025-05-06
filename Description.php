@@ -41,7 +41,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 </nav>
 
 <div class="content">
-    <h1>Restaurant Menu</h1>
+    <h1>Restaurant Menu Description</h1>
 
     <?php foreach ($menu as $dish): ?>
         <div class="dish">
