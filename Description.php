@@ -20,9 +20,9 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Restaurant Menu</title>
+    <title>Restaurant Menu Description</title>
     <link rel="stylesheet" href="CSS/navbar.css">
-    <link rel="stylesheet" href="CSS/menu.css">
+    <link rel="stylesheet" href="CSS/Description.css">
 </head>
 <body>
 
