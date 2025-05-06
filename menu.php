@@ -45,7 +45,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 <nav class = "upnav">
     <div class="topnav">
         <div class="logo">
-            <a href = '#'>Lotus Fire</a>
+            <a href = 'home.html'>Lotus Fire</a>
         </div>
         <ul>
             <li><button onclick="location.href='#menu'">Menu</button></li>
