@@ -27,43 +27,45 @@
     <ul>
       <li>
         <img src="images/phone.png" alt="Small phone icon" />
-        <p>77927523</p>
+        <p><a href = "tel:+35677927523">+356 77927523</a></p>
       </li>
       <li>
         <img src="images/email.png" alt="Small letter icon" />
-        <p>Lotus_Fire@gmail.com</p>
+        <p><a href = "mailto:Lotus_Fire@gmail.com">Lotus_Fire@gmail.com</a></p>
       </li>
     </ul>
   </section>
   <section id="booking" class="booking">
     <h2>Book a Table</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <input type="date" required />
-      <input type="time" required />
-      <button type="submit">Reserve Now</button>
+    <form action="bookingForm.php" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="date" name="date" required />
+        <input type="time" name="time" required />
+        <button type="submit">Reserve Now</button>  
     </form>
   </section>
+
   <section id="query" class="contact-form">
     <h2>Ask a Query</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Question" rows="5" required></textarea>
-      <button type="submit">Submit Query</button>
-    </form>
+    <form action="queryForm.php" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="question" placeholder="Your Question" rows="5" required></textarea>
+        <button type="submit">Submit Query</button>
+      </form>
   </section>
   
   <section id="complaint" class="contact-form">
-    <h2>File a Complaint</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Describe your issue" rows="5" required></textarea>
-      <button type="submit">Submit Complaint</button>
-    </form>
-  </section>
+  <h2>File a Complaint</h2>
+  <form action="complaintForm.php" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="complaint" placeholder="Describe your issue" rows="5" required></textarea>
+    <button type="submit">Submit Complaint</button>
+  </form>
+</section>
+
   
   
   <footer>

@@ -3,7 +3,7 @@ session_start(); // Start the session to store user favourites
 
 $menu = []; // an empty array is initialised to hold menu items
 
-$csvFile = "menu.csv";
+$csvFile = "CSVF/menu.csv";
 
 // Code below is used to open the csv file
 if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
