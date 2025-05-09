@@ -1,6 +1,23 @@
 <?php
 session_start(); // Start the session to store user favourites
 
+// Check if a favourite heart was clicked
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fav_dish'])) {
+    $dishName = $_POST['fav_dish'];
+
+    if (!isset($_SESSION['favourites'])) {
+        $_SESSION['favourites'] = [];
+    }
+
+    if (in_array($dishName, $_SESSION['favourites'])) {
+        // If already favourited, remove it
+        $_SESSION['favourites'] = array_diff($_SESSION['favourites'], [$dishName]);
+    } else {
+        // Otherwise, add to favourites
+        $_SESSION['favourites'][] = $dishName;
+    }
+}
+
 $menu = []; // an empty array is initialised to hold menu items
 
 $csvFile = "CSVF/menu.csv";
@@ -35,6 +52,16 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
     <!-- Link the HTML part to the CSS files -->
     <link rel="stylesheet" href="CSS/navbar.css">
     <link rel="stylesheet" href="CSS/menu.css">
+    <style>
+        .heart-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
 <nav class="upnav">
@@ -54,41 +81,40 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 <div class="content">
     <h1>Restaurant Menu</h1>
 
-    <!-- The entire menu is wrapped in a form to allow users to select favourite dishes -->
-    <form method="post" action="favourites.php">
+    <?php foreach ($menu as $region => $placements): ?>
+        <!-- The foreach loop is used to loop through each region in the menu array and assign it to the region variable -->
+        <div class="region"> 
+            <h2><?= htmlspecialchars($region) ?></h2> <!-- This is used to display the region name as a header -->
 
-        <?php foreach ($menu as $region => $placements): ?>
-            <!-- The foreach loop is used to loop through each region in the menu array and assign it to the region variable -->
-            <div class="region"> 
-                <h2><?= htmlspecialchars($region) ?></h2> <!-- This is used to display the region name as a header -->
+            <?php foreach ($placements as $placement => $dishes): ?>
+                <!-- The foreach loop above is used to loop through each placement in the menu array and assign it to variable placement -->
+                <div class="placement">
+                    <h3><?= htmlspecialchars($placement) ?></h3> <!-- This is used to display the placement name as a header -->
 
-                <?php foreach ($placements as $placement => $dishes): ?>
-                    <!-- The foreach loop above is used to loop through each placement in the menu array and assign it to variable placement -->
-                    <div class="placement">
-                        <h3><?= htmlspecialchars($placement) ?></h3> <!-- This is used to display the placement name as a header -->
+                    <?php foreach ($dishes as $dish): ?> 
+                        <!-- The foreach loop is used to loop through each dish in the current placement -->
+                        <div class="dish">
+                            <!-- This div is used to display the dish's picture, its name, description and price -->
+                            <img src="images/<?= htmlspecialchars($dish['image']) ?>" alt="<?= htmlspecialchars($dish['dish_name']) ?>">
+                            <div class="dish-text">
+                                <strong><?= htmlspecialchars($dish['dish_name']) ?></strong><br>
+                                <em><?= htmlspecialchars($dish['description']) ?></em><br>
+                                €<?= htmlspecialchars($dish['price']) ?><br>
 
-                        <?php foreach ($dishes as $dish): ?> 
-                            <!-- The foreach loop is used to loop through each dish in the current placement -->
-                            <div class="dish">
-                                <!-- This div is used to display the dish's picture, its name, description and price -->
-                                <img src="images/<?= htmlspecialchars($dish['image']) ?>" alt="<?= htmlspecialchars($dish['dish_name']) ?>">
-                                <div class="dish-text">
-                                    <strong><?= htmlspecialchars($dish['dish_name']) ?></strong><br>
-                                    <em><?= htmlspecialchars($dish['description']) ?></em><br>
-                                    €<?= htmlspecialchars($dish['price']) ?><br>
-                                    <!-- Checkbox added to allow user to select this dish as a favourite -->
-                                    <input type="checkbox" name="favourites[]" value="<?= htmlspecialchars($dish['dish_name']) ?>"> Add to favourites
-                                </div>
+                                <!-- Heart button added to allow user to favourite/unfavourite -->
+                                <form method="post" style="display:inline;">
+                                    <input type="hidden" name="fav_dish" value="<?= htmlspecialchars($dish['dish_name']) ?>">
+                                    <button type="submit" class="heart-btn">
+                                        <?= in_array($dish['dish_name'], $_SESSION['favourites'] ?? []) ? '❤️' : '🤍' ?>
+                                    </button>
+                                </form>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endforeach; ?>
-
-        <!-- Submit button to send selected favourites to the next page -->
-        <input type="submit" value="Save Favourites">
-    </form>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <a href='Description.php'>DESCRIPTION TEMP</a>
