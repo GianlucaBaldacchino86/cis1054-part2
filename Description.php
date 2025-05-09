@@ -20,6 +20,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 <!DOCTYPE html>
 <html>
 <head>
+     <!-- linking css files for page decoration -->
     <title>Restaurant Menu Description</title>
     <link rel="stylesheet" href="CSS/navbar.css">
     <link rel="stylesheet" href="CSS/Description.css">
@@ -42,7 +43,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 
 <div class="content">
     <h1>Restaurant Menu Description</h1>
-
+ <!-- code to be able to write in a specific format for the csv file -->
     <?php foreach ($menu as $dish): ?>
         <div class="dish">
             <div class="dish-text">
