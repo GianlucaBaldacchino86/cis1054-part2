@@ -107,5 +107,9 @@ document.querySelectorAll('.heart').forEach(heart => {
     });
 });
 </script>
+<footer>
+    <p>&copy; 2025 Lotus Fire Restaurant. All rights reserved.</p>
+</footer>
+
 </body>
 </html>

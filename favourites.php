@@ -1,96 +1,86 @@
 <?php
-session_start(); // Start the session to store favourites
+session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
 
-require 'vendor/autoload.php'; // PHPMailer autoloader
+// Load menu from CSV
+$menu = [];
+$csvFile = "CSVF/menu.csv";
+if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
+    $columnHeaders = fgetcsv($fileHandle);
+    while (($rowData = fgetcsv($fileHandle)) !== FALSE) {
+        $menuItem = array_combine($columnHeaders, $rowData);
+        $region = $menuItem['region'];
+        $placement = $menuItem['placement'];
+        $menu[$region][$placement][] = $menuItem;
+    }
+    fclose($fileHandle);
+}
 
-// Check if form is submitted to email favourites
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_favourites'])) {
+// Initialize favourites session if not set
+if (!isset($_SESSION['favourites'])) {
+    $_SESSION['favourites'] = [];
+}
+
+// Handle add/remove favourites via GET
+if (isset($_GET['toggle'])) {
+    $dishName = $_GET['toggle'];
+    if (in_array($dishName, $_SESSION['favourites'])) {
+        $_SESSION['favourites'] = array_diff($_SESSION['favourites'], [$dishName]);
+    } else {
+        $_SESSION['favourites'][] = $dishName;
+    }
+    header("Location: favourites.php");
+    exit();
+}
+
+// Handle removing with 'remove' param
+if (isset($_GET['remove'])) {
+    $dishName = $_GET['remove'];
+    $_SESSION['favourites'] = array_diff($_SESSION['favourites'], [$dishName]);
+    header("Location: favourites.php");
+    exit();
+}
+
+// Email sending logic
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
 
-    // Prepare email content
-    $favourites = $_SESSION['favourites'] ?? [];
-    $favouritesList = "\nFavourite Dishes:\n";
-    foreach ($favourites as $fav) {
-        $favouritesList .= "- {$fav}\n";
-    }
+    $favs = $_SESSION['favourites'];
+    $favDetails = "\nFavourite Dishes:\n" . implode("\n", $favs);
 
     $mail = new PHPMailer(true);
 
     try {
-        // SMTP configuration
         $mail->isSMTP();
-        $mail->Host       = 'smtp.mailtrap.io';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = '98b88755d14f20'; // Replace with your Mailtrap username
-        $mail->Password   = '15e6a66a781e00'; // Replace with your Mailtrap password
-        $mail->Port       = 2525;
+        $mail->Host = 'smtp.mailtrap.io';
+        $mail->SMTPAuth = true;
+        $mail->Username = '98b88755d14f20';
+        $mail->Password = '15e6a66a781e00';
+        $mail->Port = 2525;
 
         $mail->setFrom('restaurant@example.com', 'Restaurant');
-        $mail->isHTML(false);
-
-        // Email to restaurant owner
-        $mail->addAddress('gbtest86152@gmail.com');
-        $mail->Subject = 'User Favourite Dishes';
-        $mail->Body    = "User Name: {$name}\nUser Email: {$email}\n" . $favouritesList;
-        $mail->send();
-
-        // Clear recipients and send to user
-        $mail->clearAddresses();
         $mail->addAddress($email, $name);
-        $mail->Subject = 'Your Favourite Dishes';
-        $mail->Body    = "Thank you for choosing your favourite dishes!\n" . $favouritesList;
+        $mail->isHTML(false);
+        $mail->Subject = 'Your Favourite Dishes from Lotus Fire';
+        $mail->Body = "Thank you, $name! Here are your favourites:\n" . $favDetails;
+
         $mail->send();
-
-        echo "Favourite dishes email sent.";
+        $successMessage = "Email sent successfully!";
     } catch (Exception $e) {
-        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        $errorMessage = "Failed to send email: {$mail->ErrorInfo}";
     }
-    exit();
-}
-
-// Handle add/remove favourites via GET (AJAX-friendly)
-if (isset($_GET['toggle'])) {
-    $dish = $_GET['toggle'];
-    if (!isset($_SESSION['favourites'])) {
-        $_SESSION['favourites'] = [];
-    }
-    if (in_array($dish, $_SESSION['favourites'])) {
-        $_SESSION['favourites'] = array_diff($_SESSION['favourites'], [$dish]);
-    } else {
-        $_SESSION['favourites'][] = $dish;
-    }
-    header("Location: favourites.php");
-    exit();
-}
-
-if (isset($_GET['remove'])) {
-    $dish = $_GET['remove'];
-    $_SESSION['favourites'] = array_diff($_SESSION['favourites'], [$dish]);
-    header("Location: favourites.php");
-    exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Your Favourites</title>
-    <link rel="stylesheet" href="CSS/navbar.css">
-    <link rel="stylesheet" href="CSS/menu.css">
-    <style>
-        .dish-fav { display: flex; align-items: center; justify-content: space-between; }
-        .heart, .remove-btn {
-            cursor: pointer;
-            font-size: 24px;
-            color: red;
-            text-decoration: none;
-            padding: 0 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/favourites.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
 </head>
 <body>
 <nav class="upnav">
@@ -101,32 +91,44 @@ if (isset($_GET['remove'])) {
         <ul>
             <li><button onclick="location.href='menu.php'">Menu</button></li>
             <li><button onclick="location.href='favourites.php'">Favourites</button></li>
-            <li><button onclick="location.href='contactUs.html'">Contact</button></li>
+            <li><button onclick="location.href='#about'">About us</button></li>
+            <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
         </ul>
     </div>
 </nav>
 
-<div class="content">
+<div class="fav-container">
     <h1>Your Favourite Dishes</h1>
 
     <?php if (!empty($_SESSION['favourites'])): ?>
-        <ul>
-            <?php foreach ($_SESSION['favourites'] as $fav): ?>
-                <li class="dish-fav">
-                    <?= htmlspecialchars($fav) ?>
-                    <a class="remove-btn" href="?remove=<?= urlencode($fav) ?>" title="Remove">❌</a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+        <?php foreach ($_SESSION['favourites'] as $fav): ?>
+            <div class="fav-item">
+                <div class="fav-details">
+                    <span><?= htmlspecialchars($fav) ?></span>
+                </div>
+                <form method="get" style="display:inline;">
+                    <input type="hidden" name="remove" value="<?= htmlspecialchars($fav) ?>">
+                    <button type="submit" class="remove-button" title="Remove">&#10060;</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
 
-        <form method="post" action="favourites.php">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <input type="submit" name="send_favourites" value="Send Favourites by Email">
-        </form>
+        <div class="email-form">
+            <h2>Send Favourites via Email</h2>
+            <?php if (!empty($successMessage)) echo "<p class='success-msg'>$successMessage</p>"; ?>
+            <?php if (!empty($errorMessage)) echo "<p class='error-msg'>$errorMessage</p>"; ?>
+            <form method="post">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <button type="submit">Send Email</button>
+            </form>
+        </div>
     <?php else: ?>
-        <p>No favourites added yet.</p>
+        <p class="empty-msg">You have no favourite dishes selected.</p>
     <?php endif; ?>
 </div>
+    <footer>
+        <p>&copy; 2025 Lotus Fire. All rights reserved.</p>
+    </footer>
 </body>
 </html>
