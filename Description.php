@@ -53,6 +53,8 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
         </div>
     <?php endforeach; ?>
 </div>
-
+<footer>
+    <p>&copy; 2025 Lotus Fire Restaurant. All rights reserved.</p>
+</footer>
 </body>
 </html>

@@ -1,0 +1,8 @@
+region,placement,dish_name,description,price,image
+Japanese,Starters,Edamame,Boiled soybeans with sea salt,3.00,Edamame.jpg
+Japanese,Starters,Miso Soup,"Savory soybean paste soup with tofu and seaweed",2.50,Miso_soup.jpg
+Japanese,Mains,Sushi Platter,"Assorted fresh nigiri and maki rolls",12.00,sushi.jpg
+Japanese,Mains,Chicken Teriyaki,"Grilled chicken glazed with teriyaki sauce",10.00,teriyaki.jpg
+Japanese,Mains,Ramen,"Noodle soup with pork, egg, and vegetables",11.50,ramen.jpg
+Japanese,Desserts,Mochi Ice Cream,"Rice dough balls filled with ice cream",4.00,mochi.jpg
+Japanese,Desserts,Matcha Cake,"Green tea sponge cake with whipped cream",4.50,matcha.jpg

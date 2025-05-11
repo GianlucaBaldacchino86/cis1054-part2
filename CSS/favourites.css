@@ -1,0 +1,72 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #fff8f0;
+    color: #333;
+}
+
+.fav-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.fav-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff8f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.remove-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.email-form {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.email-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+button[type=submit] {
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.success-msg {
+    color: green;
+}
+
+.error-msg {
+    color: red;
+}
+
+.empty-msg {
+    font-style: italic;
+    color: #777;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}

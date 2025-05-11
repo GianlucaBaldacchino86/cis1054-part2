@@ -1,4 +1,9 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //The if-statement checks if the form has been submitted
     $data = [
@@ -24,17 +29,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     //The code below is used to send an email to the restaurant owner and the user.
     //owner part
-    $emailOwner = "gbtest86151@gmail.com";
-    $ownerSubject = "New Booking Request";
-    mail($emailOwner, $ownerSubject, $bookingDetails);//The mail() function is used to send an email to the restaurant owner with the booking details.
+    $mail = new PHPMailer(true);
 
-    //user part
-    $userSubject = "Booking Confirmation";
-    $userMessage = "Thank you for your booking!\n\n" . $bookingDetails;
-    mail($data[1], $userSubject, $userMessage);
+    try {
+        // SMTP configuration
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.mailtrap.io';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = '98b88755d14f20'; // Replace with your Mailtrap username
+        $mail->Password   = '15e6a66a781e00'; // Replace with your Mailtrap password
+        $mail->Port       = 2525;
 
-    echo "Booking emails sent.";//This is used to display a message to the user to tell them that the booking email has been sent successfully.
-    
+        $mail->setFrom('restaurant@example.com', 'Restaurant');
+        $mail->isHTML(false); // Set to true if you want to use HTML
+
+        // Email to restaurant owner
+        $mail->addAddress('gbtest86152@gmail.com'); // Restaurant owner
+        $mail->Subject = 'New Booking Request';
+        $mail->Body    = $bookingDetails;
+        $mail->send();
+
+        // Clear recipients for second email
+        $mail->clearAddresses();
+
+        // Email to user
+        $mail->addAddress($data[1], $data[0]); // User's email and name
+        $mail->Subject = 'Booking Confirmation';
+        $mail->Body    = "Thank you for your booking!\n\n" . $bookingDetails;
+        $mail->send();
+
+        echo "Booking emails sent.";
+
+    } catch (Exception $e) {
+        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }  
     header("Location: contactUs.html");//the user is redirected to the contactUs html page once the data is written to the CSV file.
     exit();//Stop the script.
 }
