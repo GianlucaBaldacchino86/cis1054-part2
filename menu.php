@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_fav'])) {
         <ul>
             <li><button onclick="location.href='#menu'">Menu</button></li>
             <li><button onclick="location.href='favourites.php'">Favourites</button></li>
-            <li><button onclick="location.href='#about'">About us</button></li>
+            <li><button onclick="location.href='AboutUs.html'">About us</button></li>
             <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
         </ul>
     </div>
