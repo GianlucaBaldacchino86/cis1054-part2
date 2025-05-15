@@ -18,42 +18,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         fputcsv($file, $data);
         fclose($file);
 
-         // Prepare the email message
+    
         $questionDetails = "
         Question Submitted:\n
         Name: $name\n
         Email: $email\n
         Question:\n$question\n";
-
-        $mail = new PHPMailer(true);
+        //the questionDetails variable is used to store the details of the question that has been submitted by the user.
+        
+        $mail = new PHPMailer(true); //initalise the PHPMailer class
 
         try {
-            // Mailtrap SMTP settings
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.mailtrap.io';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = '98b88755d14f20'; // your Mailtrap username
-            $mail->Password   = '15e6a66a781e00'; // your Mailtrap password
-            $mail->Port       = 2525;
+            //Mailtrap SMTP settings to test email functionality of the form
+            $mail->isSMTP(); //used to set mailer to SMTP
+            $mail->Host       = 'smtp.mailtrap.io';//set the smtp host name
+            $mail->SMTPAuth   = true;//used to enable SMTP authentication 
+            $mail->Username   = '98b88755d14f20'; //Mailtrap username
+            $mail->Password   = '15e6a66a781e00'; //Mailtrap password
+            $mail->Port       = 2525;//this is the SMTP port number
 
-            $mail->setFrom('restaurant@example.com', 'Restaurant');
-            $mail->isHTML(false); // plain text email
+            $mail->setFrom('restaurant@example.com', 'Restaurant');//Set the sender's email address and name
+            $mail->isHTML(false);//used to specify that the email's format is plain text
 
-            // Email to restaurant owner
-            $mail->addAddress('gbtest86151@gmail.com');
+            //this part covers the email to the restaurant
+            $mail->addAddress('restaurant_owner@gmail.com');//Add the restaurant's email address
             $mail->Subject = 'New Question Submitted';
             $mail->Body    = $questionDetails;
             $mail->send();
 
-            // Email to user
-            $mail->clearAddresses();
-            $mail->addAddress($email, $name);
+            //this part covers the email to the user
+            $mail->clearAddresses();//clear the previous recipient
+            $mail->addAddress($email, $name);//used to add the user's email address
             $mail->Subject = 'We received your question';
             $mail->Body    = "Thank you for reaching out to us!\n\nHere’s a copy of your question:\n\n" . $questionDetails;
             $mail->send();
 
         } catch (Exception $e) {
-            echo "Mailer Error: {$mail->ErrorInfo}";
+            echo "Mailer Error: {$mail->ErrorInfo}";//used to catch any errors that occur during the sending of the email
         }
     }
     }//end if-statement
