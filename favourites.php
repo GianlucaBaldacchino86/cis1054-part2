@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
             <li><button onclick="location.href='menu.php'">Menu</button></li>
             <li><button onclick="location.href='favourites.php'">Favourites</button></li>
             <li><button onclick="location.href='#about'">About us</button></li>
-            <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
+            <li><button onclick="location.href='contactUs.php'">Contact Us</button></li>
         </ul>
     </div>
 </nav>

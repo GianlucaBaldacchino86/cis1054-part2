@@ -36,7 +36,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
             <li><button onclick="location.href='#menu'">Menu</button></li>
             <li><button onclick="location.href='#favourite'">Favourite</button></li>
             <li><button onclick="location.href='#about'">About us</button></li>
-            <li><button onclick="location.href='#contact'">Contact Us</button></li>
+            <li><button onclick="location.href='contactUs.php'">Contact Us</button></li>
         </ul>
     </div>
 </nav>

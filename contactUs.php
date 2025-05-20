@@ -6,7 +6,6 @@ fclose($csv);
 
 $phone = $data[0];
 $resEmail = $data[1];
-$ownerEmail = $data[2]; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,8 +26,8 @@ $ownerEmail = $data[2];
       <ul>
         <li><button onclick="location.href = 'menu.php'">Menu</button></li>
         <li><button onclick="location.href='favourites.php'">Favourites</button></li>
-        <li><button onclick="location.href='#about'">About us</button></li>
-        <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
+        <li><button onclick="location.href='AboutUs.html'">About us</button></li>
+        <li><button onclick="location.href='contactUs.php'">Contact Us</button></li>
       </ul>
     </div>
   </nav>
