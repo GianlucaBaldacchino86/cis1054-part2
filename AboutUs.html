@@ -4,25 +4,31 @@
   <meta charset="UTF-8">
   <title>About Us - Lotus Fire</title>
   <link rel="stylesheet" href="CSS/AboutUs.css">
+  <link rel="stylesheet" href="css/navbar.css" />
 </head>
 <body>
 
-  <nav class="topnav">
-    <div class="logo">
-      <a href="home.html">Lotus Fire</a>
-    </div>
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="AboutUs.html">About Us</a></li>
-      <li><a href="contactUs.php">Contact</a></li>
-    </ul>
-  </nav>
+    <body>
+        <nav class="upnav">
+          <div class="topnav">
+            <div class="logo">
+              <a href="home.html">Lotus Fire</a>
+            </div>
+            <ul>
+              <li><button onclick="location.href = 'menu.php'">Menu</button></li>
+              <li><button onclick="location.href = 'Description.php'">Description</button></li>
+              <li><button onclick="location.href='favourites.php'">Favourites</button></li>
+              <li><button onclick="location.href='AboutUs.html'">About us</button></li>
+              <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
+            </ul>
+          </div>
+        </nav>
 
   <div class="content">
     <h1>About Us</h1>
     <div id="about-section"></div>
   </div>
 
-  <script src="JS/AboutUs.js"></script>
+  <script src="AboutUs.js"></script>
 </body>
 </html>

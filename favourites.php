@@ -19,7 +19,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
     fclose($fileHandle);
 }
 
-// Initialize favourites session if not set
+// Initialise favourites if not set
 if (!isset($_SESSION['favourites'])) {
     $_SESSION['favourites'] = [];
 }
@@ -36,7 +36,7 @@ if (isset($_GET['toggle'])) {
     exit();
 }
 
-// Handle removing with 'remove' param
+// Handle removing with 'remove'
 if (isset($_GET['remove'])) {
     $dishName = $_GET['remove'];
     $_SESSION['favourites'] = array_diff($_SESSION['favourites'], [$dishName]);
@@ -55,18 +55,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
     $mail = new PHPMailer(true);
 
     try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.mailtrap.io';
-        $mail->SMTPAuth = true;
-        $mail->Username = '98b88755d14f20';
-        $mail->Password = '15e6a66a781e00';
-        $mail->Port = 2525;
+        //Mailtrap SMTP settings to test email functionality of the form
+        $mail->isSMTP();//set mailer to use SMTP
+        $mail->Host       = 'smtp.mailtrap.io';//Set the SMTP host name
+        $mail->SMTPAuth   = true;//Enable smtp authentication
+        $mail->Username   = '98b88755d14f20'; //Mailtrap username
+        $mail->Password   = '15e6a66a781e00'; //Mailtrap password
+        $mail->Port       = 2525;//the smtp port number
 
-        $mail->setFrom('restaurant@example.com', 'Restaurant');
-        $mail->addAddress($email, $name);
-        $mail->isHTML(false);
-        $mail->Subject = 'Your Favourite Dishes from Lotus Fire';
-        $mail->Body = "Thank you, $name! Here are your favourites:\n" . $favDetails;
+        
+        $mail->addAddress($email, $name); //Recepient
+        $mail->setFrom('restaurant@example.com', 'Restaurant');//Set the sender's email address and name
+        $mail->isHTML(false);//Set the email format to plain text
+        $mail->Subject = 'Your favourite ishes from Lotus Fire';
+        $mail->Body = "Thank you, $name! Here are your favourite dishes:\n" . $favDetails;//Sends favourite dishes to customer
 
         $mail->send();
         $successMessage = "Email sent successfully!";
@@ -83,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
     <link rel="stylesheet" href="css/navbar.css" />
 </head>
 <body>
+<!--Navigation Bar-->
 <nav class="upnav">
     <div class="topnav">
         <div class="logo">
@@ -99,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 
 <div class="fav-container">
     <h1>Your Favourite Dishes</h1>
-
+    <!--Printing each favourite dish-->
     <?php if (!empty($_SESSION['favourites'])): ?>
         <?php foreach ($_SESSION['favourites'] as $fav): ?>
             <div class="fav-item">
@@ -112,11 +115,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
                 </form>
             </div>
         <?php endforeach; ?>
-
+        <!--Form to send emails-->
         <div class="email-form">
             <h2>Send Favourites via Email</h2>
-            <?php if (!empty($successMessage)) echo "<p class='success-msg'>$successMessage</p>"; ?>
-            <?php if (!empty($errorMessage)) echo "<p class='error-msg'>$errorMessage</p>"; ?>
             <form method="post">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
@@ -124,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
             </form>
         </div>
     <?php else: ?>
-        <p class="empty-msg">You have no favourite dishes selected.</p>
+        <p class="empty-msg">You have no favourite dishes selected.</p><!--In case someone doesn't add any favourites-->
     <?php endif; ?>
 </div>
     <footer>

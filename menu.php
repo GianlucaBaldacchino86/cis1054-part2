@@ -4,7 +4,7 @@ session_start(); // Start the session to store user favourites
 $menu = [];
 $csvFile = "CSVF/menu.csv";
 
-// Load menu from CSV
+// Load menu from the CSV
 if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
     $columnHeaders = fgetcsv($fileHandle);
     while (($rowData = fgetcsv($fileHandle)) !== FALSE) {
@@ -16,7 +16,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
     fclose($fileHandle);
 }
 
-// Handle AJAX requests to add/remove favourites
+// Allows users to favourite items as well remove them
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_fav'])) {
     $dish = $_POST['toggle_fav'];
     if (!isset($_SESSION['favourites'])) $_SESSION['favourites'] = [];
@@ -50,23 +50,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_fav'])) {
     </style>
 </head>
 <body>
+<!--Navbar at the top-->
 <nav class="upnav">
     <div class="topnav">
         <div class="logo">
             <a href='home.html'>Lotus Fire</a>
         </div>
         <ul>
-            <li><button onclick="location.href='#menu'">Menu</button></li>
-            <li><button onclick="location.href='favourites.php'">Favourites</button></li>
-            <li><button onclick="location.href='#about'">About us</button></li>
-            <li><button onclick="location.href='contactUs.php'">Contact Us</button></li>
+        <li><button onclick="location.href = 'menu.php'">Menu</button></li>
+              <li><button onclick="location.href = 'Description.php'">Description</button></li>
+              <li><button onclick="location.href='favourites.php'">Favourites</button></li>
+              <li><button onclick="location.href='AboutUs.html'">About us</button></li>
+              <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
         </ul>
     </div>
 </nav>
 
 <div class="content">
     <h1>Restaurant Menu</h1>
-
+    <!--Sections Every region seperately in the menu-->
     <?php foreach ($menu as $region => $placements): ?>
         <div class="region">
             <h2><?= htmlspecialchars($region) ?></h2>
@@ -76,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_fav'])) {
                     <?php foreach ($dishes as $dish): 
                         $dishName = $dish['dish_name'];
                         $isFav = isset($_SESSION['favourites']) && in_array($dishName, $_SESSION['favourites']);
-                    ?>
+                    ?>  <!--Printing each dish-->
                         <div class="dish">
                             <img src="images/<?= htmlspecialchars($dish['image']) ?>" alt="<?= htmlspecialchars($dishName) ?>">
                             <div class="dish-text">
@@ -93,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_fav'])) {
     <?php endforeach; ?>
 </div>
 
+<!--Hearts changing colours + toggling favourites-->
 <script>
 document.querySelectorAll('.heart').forEach(heart => {
     heart.addEventListener('click', function() {
@@ -107,6 +110,11 @@ document.querySelectorAll('.heart').forEach(heart => {
     });
 });
 </script>
+<div>
+    <ul>
+        <li><button onclick="location.href='description.html'">Description</button></li>
+    </ul>
+</div>
 <footer>
     <p>&copy; 2025 Lotus Fire Restaurant. All rights reserved.</p>
 </footer>
