@@ -1,8 +1,14 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 require 'vendor/autoload.php';
+$csv = fopen("contacts.csv", "r");
+$headers = fgetcsv($csv); 
+$data = fgetcsv($csv);
+fclose($csv);
+$resEmail = $data[1];
+$ownerEmail = $data[2]; 
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //The if-statement checks if the form has been submitted
@@ -37,11 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail->Password   = '15e6a66a781e00'; //Mailtrap password
             $mail->Port       = 2525;//this is the SMTP port number
 
-            $mail->setFrom('restaurant@example.com', 'Restaurant');//Set the sender's email address and name
+            $mail->setFrom($resEmail, 'Restaurant');//Set the sender's email address and name
             $mail->isHTML(false);//used to specify that the email's format is plain text
 
             //this part covers the email to the restaurant
-            $mail->addAddress('restaurant_owner@gmail.com');//Add the restaurant's email address
+            $mail->addAddress($ownerEmail);//Add the restaurant owner's email address
             $mail->Subject = 'New Question Submitted';
             $mail->Body    = $questionDetails;
             $mail->send();
@@ -59,6 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     }//end if-statement
 
-    header("Location: contactUs.html");//once the data is written to the CSV file, the user is redirected to the contactUs html page.
+    header("Location: contactUs.php");//once the data is written to the CSV file, the user is redirected to the contactUs html page.
     exit();//used to stp the script.
 ?>

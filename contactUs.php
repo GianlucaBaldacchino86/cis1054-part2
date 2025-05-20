@@ -1,3 +1,13 @@
+<?php
+$csv = fopen("contacts.csv", "r");
+$headers = fgetcsv($csv); 
+$data = fgetcsv($csv);
+fclose($csv);
+
+$phone = $data[0];
+$resEmail = $data[1];
+$ownerEmail = $data[2]; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +18,7 @@
   <link rel="stylesheet" href="css/navbar.css" />
 </head>
 <body>
+  <!-- Navigation Bar code copied from the NavBar&Footer html file-->
   <nav class="upnav">
     <div class="topnav">
       <div class="logo">
@@ -23,15 +34,16 @@
   </nav>
 
   <section id="contact" class="contact">
+    <!-- Contact Us Section -->
     <h2>Contact us:</h2>
     <ul>
       <li>
         <img src="images/phone.png" alt="Small phone icon" />
-        <p><a href = "tel:+35677927523">+356 77927523</a></p>
+        <p><a href="tel:<?= $phone ?>"><?= $phone ?></a></p>
       </li>
       <li>
         <img src="images/email.png" alt="Small letter icon" />
-        <p><a href = "mailto:Lotus_Fire@gmail.com">Lotus_Fire@gmail.com</a></p>
+        <p><a href="mailto:<?= $resEmail ?>"><?= $resEmail ?></a></p>
       </li>
     </ul>
   </section>
