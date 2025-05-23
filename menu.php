@@ -58,10 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_fav'])) {
         </div>
         <ul>
         <li><button onclick="location.href = 'menu.php'">Menu</button></li>
-              <li><button onclick="location.href = 'Description.php'">Description</button></li>
-              <li><button onclick="location.href='favourites.php'">Favourites</button></li>
-              <li><button onclick="location.href='AboutUs.html'">About us</button></li>
-              <li><button onclick="location.href='contactUs.html'">Contact Us</button></li>
+            <li><button onclick="location.href = 'menu.php'">Menu</button></li>
+            <li><button onclick="location.href = 'Description.php'">Description</button></li>
+            <li><button onclick="location.href='favourites.php'">Favourite</button></li>
+            <li><button onclick="location.href='AboutUs.html'">About us</button></li>
+            <li><button onclick="location.href='contactUs.php'">Contact Us</button></li>
         </ul>
     </div>
 </nav>
