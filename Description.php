@@ -33,7 +33,6 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
             <a href='home.html'>Lotus Fire</a>
         </div>
         <ul>
-        <li><button onclick="location.href = 'menu.php'">Menu</button></li>
             <li><button onclick="location.href = 'menu.php'">Menu</button></li>
             <li><button onclick="location.href = 'Description.php'">Description</button></li>
             <li><button onclick="location.href='favourites.php'">Favourite</button></li>
