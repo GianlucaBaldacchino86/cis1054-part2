@@ -5,6 +5,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
+$csv = fopen("contacts.csv", "r");
+$headers = fgetcsv($csv); 
+$data = fgetcsv($csv);
+fclose($csv);
+$resEmail = $data[1];
+
 // Load menu from CSV
 $menu = [];
 $csvFile = "CSVF/menu.csv";
@@ -65,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 
         
         $mail->addAddress($email, $name); //Recepient
-        $mail->setFrom('restaurant@example.com', 'Restaurant');//Set the sender's email address and name
+        $mail->setFrom($resEmail, 'Restaurant');//Set the sender's email address and name
         $mail->isHTML(false);//Set the email format to plain text
         $mail->Subject = 'Your favourite ishes from Lotus Fire';
         $mail->Body = "Thank you, $name! Here are your favourite dishes:\n" . $favDetails;//Sends favourite dishes to customer
