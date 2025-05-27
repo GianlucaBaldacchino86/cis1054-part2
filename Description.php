@@ -21,7 +21,7 @@ if (($fileHandle = fopen($csvFile, "r")) !== FALSE) {
 <html>
 <head>
      <!-- linking css files for page decoration -->
-    <title>Restaurant Menu Description</title>
+    <title>Menu Description | Lotus Fire</title>
     <link rel="stylesheet" href="CSS/navbar.css">
     <link rel="stylesheet" href="CSS/Description.css">
 </head>

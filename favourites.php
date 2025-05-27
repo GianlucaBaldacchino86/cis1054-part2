@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['email'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Your Favourites</title>
+    <title>Your Favourites | Lotus Fire</title>
     <link rel="stylesheet" href="css/favourites.css" />
     <link rel="stylesheet" href="css/navbar.css" />
 </head>
