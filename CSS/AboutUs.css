@@ -57,4 +57,13 @@ iframe {
   iframe {
     height: 250px;
   }
+  
+  .map-container {
+    margin-top: 30px;
+    border: 2px solid #d94f4f;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
 }

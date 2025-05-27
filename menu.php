@@ -110,11 +110,6 @@ document.querySelectorAll('.heart').forEach(heart => {
     });
 });
 </script>
-<div>
-    <ul>
-        <li><button onclick="location.href='description.html'">Description</button></li>
-    </ul>
-</div>
 <footer>
     <p>&copy; 2025 Lotus Fire Restaurant. All rights reserved.</p>
 </footer>
